@@ -1,0 +1,43 @@
+[
+    {
+      "Id": 1,
+      "Titulo": "Acesso ao Dashboard",
+      "descricao": "Acesso ao painel principal do sistema.",
+      "UrlImagem": "https://picsum.photos/500",
+      "Senha": "Abc1234$",
+      "usernameUsuario": "usuario1"
+    },
+    {
+      "Id": 2,
+      "Titulo": "Área de Relatórios",
+      "descricao": "Relatórios financeiros de 2024.",
+      "UrlImagem": "https://picsum.photos/500",
+      "Senha": "XyZ987#",
+      "usernameUsuario": "usuario2"
+    },
+    {
+      "Id": 3,
+      "Titulo": "Portal de Suporte",
+      "descricao": "Acesso ao portal de suporte para resolução de problemas.",
+      "UrlImagem": "https://picsum.photos/500",
+      "Senha": "Qwerty321",
+      "usernameUsuario": "usuario3"
+    },
+    {
+      "Id": 4,
+      "Titulo": "Administração de Sistema",
+      "descricao": "Configurações avançadas do sistema.",
+      "UrlImagem": "https://picsum.photos/500",
+      "Senha": "Tgh!1234",
+      "usernameUsuario": "usuario4"
+    },
+    {
+      "Id": 5,
+      "Titulo": "Gestão de Usuários",
+      "descricao": "Administração e controle de acessos de usuários.",
+      "UrlImagem": "https://picsum.photos/500",
+      "Senha": "PaSsW0rD567",
+      "usernameUsuario": "usuario5"
+    }
+  ]
+  
