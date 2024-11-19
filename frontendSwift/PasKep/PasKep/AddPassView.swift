@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct AddPassView: View {
-    
     @State private var titulo = ""
     @State private var descricao = ""
     @State private var urlImagem = ""
@@ -10,6 +9,9 @@ struct AddPassView: View {
     @State private var showAlert = false
     @State private var isPasswordVisible = false
     @State private var isConfirmPasswordVisible = false
+    
+    var username: String  // Recebe o nome de usuário
+    @Environment(\.dismiss) var dismiss  // Usado para voltar à tela anterior
 
     var body: some View {
         NavigationStack {
@@ -113,6 +115,7 @@ struct AddPassView: View {
             }
             .padding()
             .navigationTitle("Adicionar Senha")
+            
         }
     }
     
@@ -124,14 +127,50 @@ struct AddPassView: View {
             // Verifica se as senhas são iguais
             showAlert = true
         } else {
-            // A senha foi criada corretamente
-            print("Senha criada com sucesso!")
-            // Aqui você pode adicionar a lógica para salvar a senha ou navegar para outra tela
+            // Realiza a criação da senha no backend
+            createPassword()
+        }
+    }
+
+    func createPassword() {
+        let url = URL(string: "http://localhost:3000/usuarios/\(username)/senhas")!  // Modifique para a URL do seu backend
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let parameters: [String: Any] = [
+            "titulo": titulo,
+            "descricao": descricao,
+            "senha": senha,
+            "urlImagem": urlImagem,
+            "username": username
+        ]
+
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
+
+            URLSession.shared.dataTask(with: request) { data, response, error in
+                if let error = error {
+                    print("Erro ao criar senha: \(error)")
+                    DispatchQueue.main.async {
+                        self.showAlert = true
+                    }
+                    return
+                }
+
+                // Caso a senha seja criada com sucesso, volta para a ContentView
+                DispatchQueue.main.async {
+                    self.dismiss()
+                }
+            }.resume()
+        } catch {
+            print("Erro ao criar JSON: \(error)")
         }
     }
 }
 
 #Preview {
-    AddPassView()
+    AddPassView(username: "Username")
 }
 

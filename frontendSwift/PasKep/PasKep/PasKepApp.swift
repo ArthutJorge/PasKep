@@ -11,7 +11,7 @@ import SwiftUI
 struct PasKepApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(username: "Username")  // Passando o username na inicialização
         }
     }
 }

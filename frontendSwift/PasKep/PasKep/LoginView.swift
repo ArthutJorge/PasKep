@@ -54,7 +54,7 @@ struct LoginView: View {
             .padding()
             
             .navigationDestination(isPresented: $isLoggedIn) {
-                ContentView()
+                ContentView(username: username)
                    .navigationBarBackButtonHidden(true)
            }
         }
@@ -112,8 +112,7 @@ struct LoginResponse: Decodable {
     let message: String
 }
 
-
-
 #Preview {
     LoginView()
 }
+

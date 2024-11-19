@@ -97,13 +97,14 @@ app.post('/login', async (req, res) => {
   }
 });
 
-// Rota para adicionar uma nova senha para um usuário
 app.post('/usuarios/:username/senhas', async (req, res) => {
-  const { username: usernameParam } = req.params; // Username da rota
-  const { titulo, descricao, senha, urlImagem, username } = req.body; // Username fornecido pelo usuário
+  const { username: usernameParam } = req.params;
+  const { titulo, descricao, senha, urlImagem } = req.body; // Username fornecido pelo usuário
 
+  console.log(`fds`)
+  
   try {
-    // Busca o ID do usuário
+    // Verifica se o usuário existe
     const userRef = collection(db, 'Usuario');
     const userQuery = query(userRef, where("username", "==", usernameParam));
     const userSnapshot = await getDocs(userQuery);
@@ -114,23 +115,24 @@ app.post('/usuarios/:username/senhas', async (req, res) => {
 
     const userId = userSnapshot.docs[0].id; // ID do criador
 
-    // Adiciona a nova senha
+    // Cria a nova senha
     const senhaRef = collection(db, 'Senha');
     const docRef = await addDoc(senhaRef, {
       titulo,
       descricao,
       senha: encrypt(senha),
-      username,
+      username: usernameParam,
       idUsuario: userId, 
       urlImagem
     });
 
-    res.status(201).json({ id: docRef.id, titulo });
+    res.status(201).json({ id: docRef.id, titulo }); // Retorna dados sobre a senha criada
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Erro ao criar senha." });
   }
 });
+
 
 // Rota para buscar todas as senhas de um usuário
 app.get('/usuarios/:username/senhas', async (req, res) => {

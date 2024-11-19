@@ -76,7 +76,7 @@ struct SignUpView: View {
             .padding()
             
             .navigationDestination(isPresented: $isLoggedIn) {
-                ContentView()
+                LoginView()
                     .navigationBarBackButtonHidden(true) // Remove o botão de back da tela de login
             }
         }

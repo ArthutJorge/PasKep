@@ -2,17 +2,9 @@ import SwiftUI
 
 struct ContentView: View {
     
-    // Lista de cards com dados de teste
-    @State private var cards: [Card] = [
-        Card(id: 1, titulo: "Card 1", descricao: "Descrição do Card 1", senha: "Senha123", urlImagem: "https://picsum.photos/500"),
-        Card(id: 2, titulo: "Card 2222", descricao: "Descrição do Card 22222", senha: "22222222", urlImagem: "https://picsum.photos/500"),
-        Card(id: 3, titulo: "Card 3", descricao: "Descrição do Card 2", senha: "Senh2a456", urlImagem: "https://picsum.photos/500"),
-        Card(id: 4, titulo: "Card 4", descricao: "Descrição do Card 2", senha: "Senh4a456", urlImagem: "https://picsum.photos/500"),
-        Card(id: 5, titulo: "Card 5", descricao: "Descrição do Card 3", senha: "Senh3a789", urlImagem: "https://picsum.photos/500")
-    ]
-    
-    
-    
+    @State private var senhas: [Senha] = []  // Lista de senhas do usuário
+    var username: String  // Nome do usuário
+
     @State private var goToLoginPage = false
 
     var body: some View {
@@ -32,44 +24,42 @@ struct ContentView: View {
                         
                         Spacer()
                         
-                        Text("Olá, Username")
+                        Text("Olá, \(username)")  // Exibe o nome de usuário
                             .font(.headline)
                             .padding(.trailing)
                     }
                     .padding()
 
-                    // Exibe os cards, se houver
-                    List(cards) { card in
-                        NavigationLink(destination: PassView(card: card)) {
-                            HStack {
-                                VStack(alignment: .leading) {
-                                    Text(card.titulo)
-                                        .font(.title2)
-                                        .fontWeight(.bold)
-                                    
-                                    Text(card.descricao)
-                                        .font(.subheadline)
-                                        .foregroundColor(.gray)
-                                }
+                    // Exibe as senhas, se houver
+                    List(senhas) { senha in
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text(senha.titulo)
+                                    .font(.title2)
+                                    .fontWeight(.bold)
                                 
-                                Spacer()
-                                
-                                AsyncImage(url: URL(string: card.urlImagem)) { image in
-                                    image
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 100, height: 100)
-                                        .cornerRadius(8)
-                                } placeholder: {
-                                    ProgressView()
-                                }
+                                Text(senha.descricao)
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray)
                             }
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color.white)
-                            .cornerRadius(12)
-                            .shadow(radius: 5)
+                            
+                            Spacer()
+                            
+                            AsyncImage(url: URL(string: senha.urlImagem)) { image in
+                                image
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 100, height: 100)
+                                    .cornerRadius(8)
+                            } placeholder: {
+                                ProgressView()
+                            }
                         }
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.white)
+                        .cornerRadius(12)
+                        .shadow(radius: 5)
                     }
                     .listStyle(PlainListStyle())
                     .padding(.top, 10)
@@ -82,7 +72,7 @@ struct ContentView: View {
                     Spacer()
                     HStack {
                         Spacer()
-                        NavigationLink(destination: AddPassView()) {
+                        NavigationLink(destination: AddPassView(username: username)) {
                             Image(systemName: "plus.circle.fill")
                                 .resizable()
                                 .frame(width: 60, height: 60)
@@ -91,16 +81,57 @@ struct ContentView: View {
                         }
                     }
                 }
-
             }
             .navigationDestination(isPresented: $goToLoginPage) {
                 LoginView()
                     .navigationBarBackButtonHidden(true) // Remove o botão de back da tela de login
             }
+            .onAppear {
+                fetchSenhas()
+            }
         }
+    }
+    
+    // Função para fazer o fetch das senhas do usuário
+    func fetchSenhas() {
+        guard let url = URL(string: "http://localhost:3000/usuarios/\(username)/senhas") else { return }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("Erro ao buscar senhas: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let data = data else { return }
+            
+            do {
+                let decoder = JSONDecoder()
+                let fetchedSenhas = try decoder.decode([Senha].self, from: data)
+                
+                // Atualiza a lista de senhas no principal thread
+                DispatchQueue.main.async {
+                    senhas = fetchedSenhas
+                }
+            } catch {
+                print("Erro ao decodificar as senhas: \(error.localizedDescription)")
+            }
+        }.resume()
     }
 }
 
+// Modelo para representar uma senha
+struct Senha: Identifiable, Decodable {
+    var id: String
+    var titulo: String
+    var descricao: String
+    var senha: String
+    var username: String
+    var urlImagem: String
+}
+
 #Preview {
-    ContentView()
+    ContentView(username: "Username")
 }
