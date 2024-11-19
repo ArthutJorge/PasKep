@@ -7,26 +7,32 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8B77BD762CDA5B7B00F89585 /* PasKepApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B77BD752CDA5B7B00F89585 /* PasKepApp.swift */; };
-		8B77BD782CDA5B7B00F89585 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B77BD772CDA5B7B00F89585 /* ContentView.swift */; };
-		8B77BD7A2CDA5B7C00F89585 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B77BD792CDA5B7C00F89585 /* Assets.xcassets */; };
-		8B77BD7D2CDA5B7C00F89585 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B77BD7C2CDA5B7C00F89585 /* Preview Assets.xcassets */; };
-		8B77BD882CDA652A00F89585 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B77BD872CDA652A00F89585 /* Card.swift */; };
-		8B77BD8C2CDA666F00F89585 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B77BD8B2CDA666F00F89585 /* LoginView.swift */; };
+		8BE919612CECCFF500908009 /* PasKepApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE919602CECCFF500908009 /* PasKepApp.swift */; };
+		8BE919632CECCFF500908009 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE919622CECCFF500908009 /* ContentView.swift */; };
+		8BE919652CECCFF600908009 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BE919642CECCFF600908009 /* Assets.xcassets */; };
+		8BE919682CECCFF600908009 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BE919672CECCFF600908009 /* Preview Assets.xcassets */; };
+		8BE9196F2CECD02E00908009 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE9196E2CECD02E00908009 /* Card.swift */; };
+		8BE919712CECD04D00908009 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE919702CECD04D00908009 /* LoginView.swift */; };
+		8BE919732CECD1DC00908009 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE919722CECD1DC00908009 /* SignUpView.swift */; };
+		8BE919752CECD43800908009 /* PassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE919742CECD43800908009 /* PassView.swift */; };
+		8BE919772CECD50600908009 /* AddPassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE919762CECD50600908009 /* AddPassView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8B77BD722CDA5B7B00F89585 /* PasKep.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PasKep.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		8B77BD752CDA5B7B00F89585 /* PasKepApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasKepApp.swift; sourceTree = "<group>"; };
-		8B77BD772CDA5B7B00F89585 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		8B77BD792CDA5B7C00F89585 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		8B77BD7C2CDA5B7C00F89585 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		8B77BD872CDA652A00F89585 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
-		8B77BD8B2CDA666F00F89585 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		8BE9195D2CECCFF500908009 /* PasKep.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PasKep.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8BE919602CECCFF500908009 /* PasKepApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasKepApp.swift; sourceTree = "<group>"; };
+		8BE919622CECCFF500908009 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		8BE919642CECCFF600908009 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8BE919672CECCFF600908009 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		8BE9196E2CECD02E00908009 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		8BE919702CECD04D00908009 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		8BE919722CECD1DC00908009 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		8BE919742CECD43800908009 /* PassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassView.swift; sourceTree = "<group>"; };
+		8BE919762CECD50600908009 /* AddPassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPassView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		8B77BD6F2CDA5B7B00F89585 /* Frameworks */ = {
+		8BE9195A2CECCFF500908009 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -36,39 +42,42 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8B77BD692CDA5B7B00F89585 = {
+		8BE919542CECCFF500908009 = {
 			isa = PBXGroup;
 			children = (
-				8B77BD742CDA5B7B00F89585 /* PasKep */,
-				8B77BD732CDA5B7B00F89585 /* Products */,
+				8BE9195F2CECCFF500908009 /* PasKep */,
+				8BE9195E2CECCFF500908009 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		8B77BD732CDA5B7B00F89585 /* Products */ = {
+		8BE9195E2CECCFF500908009 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8B77BD722CDA5B7B00F89585 /* PasKep.app */,
+				8BE9195D2CECCFF500908009 /* PasKep.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8B77BD742CDA5B7B00F89585 /* PasKep */ = {
+		8BE9195F2CECCFF500908009 /* PasKep */ = {
 			isa = PBXGroup;
 			children = (
-				8B77BD752CDA5B7B00F89585 /* PasKepApp.swift */,
-				8B77BD772CDA5B7B00F89585 /* ContentView.swift */,
-				8B77BD792CDA5B7C00F89585 /* Assets.xcassets */,
-				8B77BD7B2CDA5B7C00F89585 /* Preview Content */,
-				8B77BD872CDA652A00F89585 /* Card.swift */,
-				8B77BD8B2CDA666F00F89585 /* LoginView.swift */,
+				8BE919602CECCFF500908009 /* PasKepApp.swift */,
+				8BE919622CECCFF500908009 /* ContentView.swift */,
+				8BE919642CECCFF600908009 /* Assets.xcassets */,
+				8BE919662CECCFF600908009 /* Preview Content */,
+				8BE9196E2CECD02E00908009 /* Card.swift */,
+				8BE919702CECD04D00908009 /* LoginView.swift */,
+				8BE919722CECD1DC00908009 /* SignUpView.swift */,
+				8BE919742CECD43800908009 /* PassView.swift */,
+				8BE919762CECD50600908009 /* AddPassView.swift */,
 			);
 			path = PasKep;
 			sourceTree = "<group>";
 		};
-		8B77BD7B2CDA5B7C00F89585 /* Preview Content */ = {
+		8BE919662CECCFF600908009 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				8B77BD7C2CDA5B7C00F89585 /* Preview Assets.xcassets */,
+				8BE919672CECCFF600908009 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
@@ -76,13 +85,13 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8B77BD712CDA5B7B00F89585 /* PasKep */ = {
+		8BE9195C2CECCFF500908009 /* PasKep */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8B77BD802CDA5B7C00F89585 /* Build configuration list for PBXNativeTarget "PasKep" */;
+			buildConfigurationList = 8BE9196B2CECCFF600908009 /* Build configuration list for PBXNativeTarget "PasKep" */;
 			buildPhases = (
-				8B77BD6E2CDA5B7B00F89585 /* Sources */,
-				8B77BD6F2CDA5B7B00F89585 /* Frameworks */,
-				8B77BD702CDA5B7B00F89585 /* Resources */,
+				8BE919592CECCFF500908009 /* Sources */,
+				8BE9195A2CECCFF500908009 /* Frameworks */,
+				8BE9195B2CECCFF500908009 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -90,25 +99,25 @@
 			);
 			name = PasKep;
 			productName = PasKep;
-			productReference = 8B77BD722CDA5B7B00F89585 /* PasKep.app */;
+			productReference = 8BE9195D2CECCFF500908009 /* PasKep.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		8B77BD6A2CDA5B7B00F89585 /* Project object */ = {
+		8BE919552CECCFF500908009 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1540;
-				LastUpgradeCheck = 1540;
+				LastSwiftUpdateCheck = 1520;
+				LastUpgradeCheck = 1520;
 				TargetAttributes = {
-					8B77BD712CDA5B7B00F89585 = {
-						CreatedOnToolsVersion = 15.4;
+					8BE9195C2CECCFF500908009 = {
+						CreatedOnToolsVersion = 15.2;
 					};
 				};
 			};
-			buildConfigurationList = 8B77BD6D2CDA5B7B00F89585 /* Build configuration list for PBXProject "PasKep" */;
+			buildConfigurationList = 8BE919582CECCFF500908009 /* Build configuration list for PBXProject "PasKep" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -116,44 +125,47 @@
 				en,
 				Base,
 			);
-			mainGroup = 8B77BD692CDA5B7B00F89585;
-			productRefGroup = 8B77BD732CDA5B7B00F89585 /* Products */;
+			mainGroup = 8BE919542CECCFF500908009;
+			productRefGroup = 8BE9195E2CECCFF500908009 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8B77BD712CDA5B7B00F89585 /* PasKep */,
+				8BE9195C2CECCFF500908009 /* PasKep */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		8B77BD702CDA5B7B00F89585 /* Resources */ = {
+		8BE9195B2CECCFF500908009 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B77BD7D2CDA5B7C00F89585 /* Preview Assets.xcassets in Resources */,
-				8B77BD7A2CDA5B7C00F89585 /* Assets.xcassets in Resources */,
+				8BE919682CECCFF600908009 /* Preview Assets.xcassets in Resources */,
+				8BE919652CECCFF600908009 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		8B77BD6E2CDA5B7B00F89585 /* Sources */ = {
+		8BE919592CECCFF500908009 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B77BD782CDA5B7B00F89585 /* ContentView.swift in Sources */,
-				8B77BD882CDA652A00F89585 /* Card.swift in Sources */,
-				8B77BD8C2CDA666F00F89585 /* LoginView.swift in Sources */,
-				8B77BD762CDA5B7B00F89585 /* PasKepApp.swift in Sources */,
+				8BE919632CECCFF500908009 /* ContentView.swift in Sources */,
+				8BE919752CECD43800908009 /* PassView.swift in Sources */,
+				8BE919772CECD50600908009 /* AddPassView.swift in Sources */,
+				8BE919732CECD1DC00908009 /* SignUpView.swift in Sources */,
+				8BE9196F2CECD02E00908009 /* Card.swift in Sources */,
+				8BE919712CECD04D00908009 /* LoginView.swift in Sources */,
+				8BE919612CECCFF500908009 /* PasKepApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		8B77BD7E2CDA5B7C00F89585 /* Debug */ = {
+		8BE919692CECCFF600908009 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -205,7 +217,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -216,7 +228,7 @@
 			};
 			name = Debug;
 		};
-		8B77BD7F2CDA5B7C00F89585 /* Release */ = {
+		8BE9196A2CECCFF600908009 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -262,7 +274,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -272,7 +284,7 @@
 			};
 			name = Release;
 		};
-		8B77BD812CDA5B7C00F89585 /* Debug */ = {
+		8BE9196C2CECCFF600908009 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -300,7 +312,7 @@
 			};
 			name = Debug;
 		};
-		8B77BD822CDA5B7C00F89585 /* Release */ = {
+		8BE9196D2CECCFF600908009 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -331,25 +343,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8B77BD6D2CDA5B7B00F89585 /* Build configuration list for PBXProject "PasKep" */ = {
+		8BE919582CECCFF500908009 /* Build configuration list for PBXProject "PasKep" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				8B77BD7E2CDA5B7C00F89585 /* Debug */,
-				8B77BD7F2CDA5B7C00F89585 /* Release */,
+				8BE919692CECCFF600908009 /* Debug */,
+				8BE9196A2CECCFF600908009 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8B77BD802CDA5B7C00F89585 /* Build configuration list for PBXNativeTarget "PasKep" */ = {
+		8BE9196B2CECCFF600908009 /* Build configuration list for PBXNativeTarget "PasKep" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				8B77BD812CDA5B7C00F89585 /* Debug */,
-				8B77BD822CDA5B7C00F89585 /* Release */,
+				8BE9196C2CECCFF600908009 /* Debug */,
+				8BE9196D2CECCFF600908009 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 8B77BD6A2CDA5B7B00F89585 /* Project object */;
+	rootObject = 8BE919552CECCFF500908009 /* Project object */;
 }

@@ -43,9 +43,20 @@ function decrypt(text) {
 // Rota para adicionar um novo usuário
 app.post('/usuarios', async (req, res) => {
   const { username, senha } = req.body;
+  console.log(`Tentando cadastrar o usuário...`);
 
   try {
-    // Hash da senha
+    // Verifica se o username já existe
+    const userRef = collection(db, 'Usuario');
+    const userQuery = query(userRef, where("username", "==", username));
+    const userSnapshot = await getDocs(userQuery);
+
+    if (!userSnapshot.empty) {
+      // Se o username já existe, retorna um erro
+      return res.status(400).json({ error: "O nome de usuário já está em uso." });
+    }
+
+    // Caso o username não exista, cria o novo usuário
     const hashedPassword = await bcrypt.hash(senha, 10);
     const docRef = await addDoc(collection(db, 'Usuario'), {
       username,
@@ -57,9 +68,11 @@ app.post('/usuarios', async (req, res) => {
   }
 });
 
+
 // Rota para login de um usuário
 app.post('/login', async (req, res) => {
   const { username, senha } = req.body;
+  console.log(`login....`)
 
   try {
     // Busca o usuário pelo nome de usuário

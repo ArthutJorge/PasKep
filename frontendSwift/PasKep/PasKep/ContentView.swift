@@ -2,15 +2,23 @@ import SwiftUI
 
 struct ContentView: View {
     
-    // Lista de cards
-    @State private var cards: [Card] = []
+    // Lista de cards com dados de teste
+    @State private var cards: [Card] = [
+        Card(id: 1, titulo: "Card 1", descricao: "Descrição do Card 1", senha: "Senha123", urlImagem: "https://picsum.photos/500"),
+        Card(id: 2, titulo: "Card 2222", descricao: "Descrição do Card 22222", senha: "22222222", urlImagem: "https://picsum.photos/500"),
+        Card(id: 3, titulo: "Card 3", descricao: "Descrição do Card 2", senha: "Senh2a456", urlImagem: "https://picsum.photos/500"),
+        Card(id: 4, titulo: "Card 4", descricao: "Descrição do Card 2", senha: "Senh4a456", urlImagem: "https://picsum.photos/500"),
+        Card(id: 5, titulo: "Card 5", descricao: "Descrição do Card 3", senha: "Senh3a789", urlImagem: "https://picsum.photos/500")
+    ]
+    
+    
+    
     @State private var goToLoginPage = false
 
     var body: some View {
         NavigationStack {
             ZStack {
                 VStack {
-                    
                     HStack {
                         Button(action: {
                             goToLoginPage = true
@@ -24,7 +32,7 @@ struct ContentView: View {
                         
                         Spacer()
                         
-                        Text("Hello World")
+                        Text("Olá, Username")
                             .font(.headline)
                             .padding(.trailing)
                     }
@@ -32,34 +40,36 @@ struct ContentView: View {
 
                     // Exibe os cards, se houver
                     List(cards) { card in
-                        HStack {
-                            VStack(alignment: .leading) {
-                                Text(card.Titulo)
-                                    .font(.title2)
-                                    .fontWeight(.bold)
+                        NavigationLink(destination: PassView(card: card)) {
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Text(card.titulo)
+                                        .font(.title2)
+                                        .fontWeight(.bold)
+                                    
+                                    Text(card.descricao)
+                                        .font(.subheadline)
+                                        .foregroundColor(.gray)
+                                }
                                 
-                                Text(card.descricao)
-                                    .font(.subheadline)
-                                    .foregroundColor(.gray)
+                                Spacer()
+                                
+                                AsyncImage(url: URL(string: card.urlImagem)) { image in
+                                    image
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 100, height: 100)
+                                        .cornerRadius(8)
+                                } placeholder: {
+                                    ProgressView()
+                                }
                             }
-                            
-                            Spacer()
-                            
-                            AsyncImage(url: URL(string: card.UrlImagem)) { image in
-                                image
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 100, height: 100)
-                                    .cornerRadius(8)
-                            } placeholder: {
-                                ProgressView()
-                            }
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.white)
+                            .cornerRadius(12)
+                            .shadow(radius: 5)
                         }
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.white)
-                        .cornerRadius(12)
-                        .shadow(radius: 5)
                     }
                     .listStyle(PlainListStyle())
                     .padding(.top, 10)
@@ -72,10 +82,7 @@ struct ContentView: View {
                     Spacer()
                     HStack {
                         Spacer()
-                        Button(action: {
-                            // Ação para o botão "+"
-                            print("Botão + pressionado")
-                        }) {
+                        NavigationLink(destination: AddPassView()) {
                             Image(systemName: "plus.circle.fill")
                                 .resizable()
                                 .frame(width: 60, height: 60)
@@ -84,48 +91,13 @@ struct ContentView: View {
                         }
                     }
                 }
+
             }
-            .onAppear {
-                // Quando a view aparecer, buscar os dados da API
-                fetchCards()
-            }
-            
             .navigationDestination(isPresented: $goToLoginPage) {
                 LoginView()
                     .navigationBarBackButtonHidden(true) // Remove o botão de back da tela de login
             }
         }
-    }
-    
-    
-    func fetchCards() {
-        guard let url = URL(string: "http://localhost:3000/dados") else { return }
-        
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-                print("Erro ao buscar dados: \(error)")
-                return
-            }
-            
-            guard let data = data else { return }
-            
-            do {
-                let decoder = JSONDecoder()
-                let fetchedCards = try decoder.decode([Card].self, from: data)
-                
-                DispatchQueue.main.async {
-                    self.cards = fetchedCards
-                }
-                
-            } catch {
-                print("Erro ao decodificar os dados: \(error)")
-            }
-        }.resume()
-    }
-    
-    func getDocumentsDirectory() -> URL {
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return paths[0]
     }
 }
 
