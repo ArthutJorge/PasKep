@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const { initializeApp } = require("firebase/app");
-const { getFirestore, collection, doc, addDoc, getDocs, deleteDoc, query, where } = require("firebase/firestore");
+const { getFirestore, collection, doc, updateDoc, addDoc, getDocs, deleteDoc, query, where } = require("firebase/firestore");
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 
@@ -226,6 +226,49 @@ app.get('/usuarios', async (req, res) => {
     res.status(200).json(usuarios);
   } catch (error) {
     res.status(500).json({ error: "Erro ao buscar usuários." });
+  }
+});
+
+// Rota para alterar uma senha cadastrada de um usuário
+app.put('/usuarios/:username/senhas/:senhaId', async (req, res) => {
+  const { username, senhaId } = req.params;
+  const { titulo, descricao, senha, urlImagem, username: novoUsername } = req.body;
+
+  try {
+    // Busca o ID do usuário criador
+    const userRef = collection(db, 'Usuario');
+    const userQuery = query(userRef, where("username", "==", username));
+    const userSnapshot = await getDocs(userQuery);
+
+    if (userSnapshot.empty) {
+      return res.status(404).json({ message: "Usuário não encontrado." });
+    }
+
+    const userId = userSnapshot.docs[0].id; // ID do criador
+
+    // Busca a senha para verificar se ela pertence ao usuário
+    const senhaRef = collection(db, 'Senha');
+    const senhaQuery = query(senhaRef, where("idUsuario", "==", userId), where("__name__", "==", senhaId));
+    const senhaSnapshot = await getDocs(senhaQuery);
+
+    if (senhaSnapshot.empty) {
+      return res.status(404).json({ message: "Senha não encontrada ou não pertence a este usuário." });
+    }
+
+    // Atualiza o documento da senha com os campos fornecidos
+    const updateData = {};
+    if (titulo) updateData.titulo = titulo;
+    if (descricao) updateData.descricao = descricao;
+    if (senha) updateData.senha = encrypt(senha); // Criptografa a nova senha, se fornecida
+    if (urlImagem) updateData.urlImagem = urlImagem;
+    if (novoUsername) updateData.username = novoUsername; // Atualiza o username se fornecido
+
+    await updateDoc(doc(db, 'Senha', senhaId), updateData);
+
+    res.status(200).json({ message: "Senha atualizada com sucesso." });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Erro ao atualizar a senha." });
   }
 });
 
