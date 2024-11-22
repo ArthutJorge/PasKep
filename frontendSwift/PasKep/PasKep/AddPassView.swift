@@ -6,6 +6,7 @@ struct AddPassView: View {
     @State private var urlImagem = ""
     @State private var senha = ""
     @State private var confirmarSenha = ""
+    @State private var siteUsername = ""
     @State private var showAlert = false
     @State private var isPasswordVisible = false
     @State private var isConfirmPasswordVisible = false
@@ -16,14 +17,12 @@ struct AddPassView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                // Título
                 TextField("Título", text: $titulo)
                     .padding()
                     .background(Color.gray.opacity(0.2))
                     .cornerRadius(8)
                     .padding(.horizontal)
                 
-                // Descrição
                 TextField("Descrição", text: $descricao)
                     .padding()
                     .background(Color.gray.opacity(0.2))
@@ -31,7 +30,6 @@ struct AddPassView: View {
                     .padding(.horizontal)
                     .padding(.top, 10)
                 
-                // URL da Imagem
                 TextField("URL da Imagem", text: $urlImagem)
                     .padding()
                     .background(Color.gray.opacity(0.2))
@@ -39,7 +37,13 @@ struct AddPassView: View {
                     .padding(.horizontal)
                     .padding(.top, 10)
                 
-                // Senha
+                TextField("Username", text: $siteUsername)
+                    .padding()
+                    .background(Color.gray.opacity(0.2))
+                    .cornerRadius(8)
+                    .padding(.horizontal)
+                    .padding(.top, 10)
+
                 HStack {
                     if isPasswordVisible {
                         TextField("Senha", text: $senha)
@@ -120,14 +124,11 @@ struct AddPassView: View {
     }
     
     func validateAndCreatePassword() {
-        // Verifica se os campos estão preenchidos corretamente
-        if titulo.isEmpty || descricao.isEmpty || urlImagem.isEmpty || senha.isEmpty || confirmarSenha.isEmpty {
+        if titulo.isEmpty || descricao.isEmpty || urlImagem.isEmpty || senha.isEmpty || confirmarSenha.isEmpty || siteUsername.isEmpty {
             showAlert = true
         } else if senha != confirmarSenha {
-            // Verifica se as senhas são iguais
             showAlert = true
         } else {
-            // Realiza a criação da senha no backend
             createPassword()
         }
     }
@@ -144,7 +145,7 @@ struct AddPassView: View {
             "descricao": descricao,
             "senha": senha,
             "urlImagem": urlImagem,
-            "username": username
+            "username": siteUsername 
         ]
 
         do {
