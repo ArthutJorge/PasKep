@@ -4,6 +4,7 @@ struct PassView: View {
     var card: Card 
     var username: String
     
+    
     @State private var isPasswordVisible = false // Estado para controlar visibilidade da senha
     @State private var isLoading = false // Estado para indicar carregamento
     @Environment(\.dismiss) private var dismiss // Para fechar a tela
@@ -114,7 +115,7 @@ struct PassView: View {
 
 #Preview {
     PassView(
-        card: Card(id: 1,titulo: "Card 1",descricao: "Descrição do Card 1",username: "site_user",senha: "Senha123",urlImagem: "https://picsum.photos/500"),
+        card: Card(id: "1",titulo: "Card 1",descricao: "Descrição do Card 1",username: "site_user",senha: "Senha123",urlImagem: "https://picsum.photos/500"),
         username: "contaPaskepUser"
     )
 }

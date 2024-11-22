@@ -124,11 +124,14 @@ struct AddPassView: View {
     }
     
     func validateAndCreatePassword() {
-        if titulo.isEmpty || descricao.isEmpty || urlImagem.isEmpty || senha.isEmpty || confirmarSenha.isEmpty || siteUsername.isEmpty {
+        if titulo.isEmpty || descricao.isEmpty || senha.isEmpty || confirmarSenha.isEmpty || siteUsername.isEmpty {
             showAlert = true
         } else if senha != confirmarSenha {
             showAlert = true
         } else {
+            if urlImagem.isEmpty {
+                urlImagem = "https://picsum.photos/500"
+            }
             createPassword()
         }
     }

@@ -32,35 +32,39 @@ struct ContentView: View {
 
                     // Exibe as senhas, se houver
                     List(senhas) { senha in
-                        HStack {
-                            VStack(alignment: .leading) {
-                                Text(senha.titulo)
-                                    .font(.title2)
-                                    .fontWeight(.bold)
+                        NavigationLink(destination: PassView(card: Card(id: senha.id, titulo: senha.titulo, descricao: senha.descricao, username: senha.username, senha: senha.senha, urlImagem: senha.urlImagem), username: username)) {
+
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Text(senha.titulo)
+                                        .font(.title2)
+                                        .fontWeight(.bold)
+                                    
+                                    Text(senha.descricao)
+                                        .font(.subheadline)
+                                        .foregroundColor(.gray)
+                                }
                                 
-                                Text(senha.descricao)
-                                    .font(.subheadline)
-                                    .foregroundColor(.gray)
+                                Spacer()
+                                
+                                AsyncImage(url: URL(string: senha.urlImagem)) { image in
+                                    image
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 100, height: 100)
+                                        .cornerRadius(8)
+                                } placeholder: {
+                                    ProgressView()
+                                }
                             }
-                            
-                            Spacer()
-                            
-                            AsyncImage(url: URL(string: senha.urlImagem)) { image in
-                                image
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 100, height: 100)
-                                    .cornerRadius(8)
-                            } placeholder: {
-                                ProgressView()
-                            }
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.white)
+                            .cornerRadius(12)
+                            .shadow(radius: 5)
                         }
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.white)
-                        .cornerRadius(12)
-                        .shadow(radius: 5)
                     }
+
                     .listStyle(PlainListStyle())
                     .padding(.top, 10)
                     
