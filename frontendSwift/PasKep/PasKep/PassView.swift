@@ -1,21 +1,21 @@
 import SwiftUI
 
-struct PassView: View {
-    var card: Card 
+struct PassView: View {   // pagina para ver as informacoes da senha
+    var card: Card  // passando o card da senha, com suas informcoes
     var username: String
     
-    
-    @State private var isPasswordVisible = false // Estado para controlar visibilidade da senha
-    @State private var isLoading = false // Estado para indicar carregamento
-    @Environment(\.dismiss) private var dismiss // Para fechar a tela
+    @State private var isPasswordVisible = false 
+    @State private var isLoading = false
+    @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         VStack {
-            Text(card.titulo)
+            Text(card.titulo)  //titulo da senha
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .padding(.top, 20)
             
+            //imagem da senha
             AsyncImage(url: URL(string: card.urlImagem)) { image in
                 image
                     .resizable()
@@ -26,15 +26,15 @@ struct PassView: View {
                 ProgressView()
             }
             .padding(.top, 20)
-            
-            Text(card.descricao)
+             
+            Text(card.descricao)  //descricao da senha
                 .font(.subheadline)
                 .foregroundColor(.gray)
                 .padding(.top, 10)
             
             VStack(alignment: .leading) {
                 HStack {
-                    Text("Username:")
+                    Text("Username:")  //username da senha
                         .font(.headline)
                         .foregroundColor(.gray)
                     
@@ -45,13 +45,13 @@ struct PassView: View {
                 .padding(.top, 10)
                 
                 HStack {
-                    // Exibe a senha oculta ou visível
+                    // 'espiar' a senha
                     Text(isPasswordVisible ? card.senha : "********")
                         .font(.headline)
                         .padding(.top, 10)
                     
                     Button(action: {
-                        isPasswordVisible.toggle() // Alterna a visibilidade da senha
+                        isPasswordVisible.toggle() 
                     }) {
                         Image(systemName: isPasswordVisible ? "eye.slash" : "eye")
                             .foregroundColor(.blue)
@@ -61,7 +61,7 @@ struct PassView: View {
             }
 
             HStack {
-                Button(action: {
+                Button(action: {   //botao para deletar a senha
                     deletePassword()
                 }) {
                     if isLoading {
@@ -86,12 +86,13 @@ struct PassView: View {
         .padding()
     }
 
+    //deletar a senha
    private func deletePassword() {
         guard let url = URL(string: "http://localhost:3000/usuarios/\(username)/senhas/\(card.id)") else { return }
         isLoading = true
 
         var request = URLRequest(url: url)
-        request.httpMethod = "DELETE"
+        request.httpMethod = "DELETE" //requisicao tipo Delete
 
         URLSession.shared.dataTask(with: request) { _, response, error in
             DispatchQueue.main.async {
@@ -103,7 +104,7 @@ struct PassView: View {
                 }
 
                 if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
-                    // Redireciona ao ContentView ao concluir
+                    // ao excluir, voltar para pagina 'anterior'
                     dismiss()
                 } else {
                     print("Erro ao excluir senha.")

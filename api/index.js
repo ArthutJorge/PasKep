@@ -1,3 +1,4 @@
+//configuracoes de dependencias
 require('dotenv').config();
 const express = require('express');
 const { initializeApp } = require("firebase/app");
@@ -5,7 +6,7 @@ const { getFirestore, collection, doc, updateDoc, addDoc, getDocs, deleteDoc, qu
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 
-// Configuração do Firebase usando variáveis de ambiente
+//configuracoes do firebase
 const firebaseConfig = {
   apiKey: process.env.API_KEY,
   authDomain: process.env.AUTH_DOMAIN,
@@ -24,6 +25,7 @@ app.use(express.json());
 
 const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY; 
 
+//criptografar senhas
 function encrypt(text) {
   const iv = crypto.randomBytes(16);
   const cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(ENCRYPTION_KEY, 'hex'), iv);
@@ -32,6 +34,7 @@ function encrypt(text) {
   return iv.toString('hex') + ':' + encrypted;
 }
 
+//descriptografar senhas
 function decrypt(text) {
   const [iv, encryptedText] = text.split(':');
   const decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(ENCRYPTION_KEY, 'hex'), Buffer.from(iv, 'hex'));
@@ -40,23 +43,20 @@ function decrypt(text) {
   return decrypted;
 }
 
-// Rota para adicionar um novo usuário
+//cadastrar usuario
 app.post('/usuarios', async (req, res) => {
   const { username, senha } = req.body;
   console.log(`Tentando cadastrar o usuário...`);
 
   try {
-    // Verifica se o username já existe
     const userRef = collection(db, 'Usuario');
     const userQuery = query(userRef, where("username", "==", username));
     const userSnapshot = await getDocs(userQuery);
 
     if (!userSnapshot.empty) {
-      // Se o username já existe, retorna um erro
       return res.status(400).json({ error: "O nome de usuário já está em uso." });
     }
 
-    // Caso o username não exista, cria o novo usuário
     const hashedPassword = await bcrypt.hash(senha, 10);
     const docRef = await addDoc(collection(db, 'Usuario'), {
       username,
@@ -68,14 +68,12 @@ app.post('/usuarios', async (req, res) => {
   }
 });
 
-
-// Rota para login de um usuário
+//login
 app.post('/login', async (req, res) => {
   const { username, senha } = req.body;
   console.log(`login....`)
 
   try {
-    // Busca o usuário pelo nome de usuário
     const userRef = collection(db, 'Usuario');
     const userQuery = query(userRef, where("username", "==", username));
     const userSnapshot = await getDocs(userQuery);
@@ -97,14 +95,12 @@ app.post('/login', async (req, res) => {
   }
 });
 
+//criar nova senha
 app.post('/usuarios/:username/senhas', async (req, res) => {
   const { username: usernameParam } = req.params;
-  const { titulo, descricao, senha, urlImagem } = req.body; // Username fornecido pelo usuário
-
-  console.log(`fds`)
+  const { titulo, descricao, senha, urlImagem } = req.body;
   
   try {
-    // Verifica se o usuário existe
     const userRef = collection(db, 'Usuario');
     const userQuery = query(userRef, where("username", "==", usernameParam));
     const userSnapshot = await getDocs(userQuery);
@@ -113,9 +109,8 @@ app.post('/usuarios/:username/senhas', async (req, res) => {
       return res.status(404).json({ message: "Usuário não encontrado." });
     }
 
-    const userId = userSnapshot.docs[0].id; // ID do criador
+    const userId = userSnapshot.docs[0].id; 
 
-    // Cria a nova senha
     const senhaRef = collection(db, 'Senha');
     const docRef = await addDoc(senhaRef, {
       titulo,
@@ -126,20 +121,18 @@ app.post('/usuarios/:username/senhas', async (req, res) => {
       urlImagem
     });
 
-    res.status(201).json({ id: docRef.id, titulo }); // Retorna dados sobre a senha criada
+    res.status(201).json({ id: docRef.id, titulo }); 
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Erro ao criar senha." });
   }
 });
 
-
-// Rota para buscar todas as senhas de um usuário
+//encontrar todas as senhas daquele usuario
 app.get('/usuarios/:username/senhas', async (req, res) => {
   const { username } = req.params;
 
   try {
-    // Busca o ID do usuário criador
     const userRef = collection(db, 'Usuario');
     const userQuery = query(userRef, where("username", "==", username));
     const userSnapshot = await getDocs(userQuery);
@@ -150,9 +143,8 @@ app.get('/usuarios/:username/senhas', async (req, res) => {
 
     const userId = userSnapshot.docs[0].id; 
 
-    // Busca todas as senhas associadas ao usuário criador
     const senhaRef = collection(db, 'Senha');
-    const senhaQuery = query(senhaRef, where("idUsuario", "==", userId)); // Verifica com idUsuario
+    const senhaQuery = query(senhaRef, where("idUsuario", "==", userId)); 
     const senhaSnapshot = await getDocs(senhaQuery);
 
     if (senhaSnapshot.empty) {
@@ -178,12 +170,11 @@ app.get('/usuarios/:username/senhas', async (req, res) => {
   }
 });
 
-// Rota para apagar uma senha de um usuário
+//deletar senha
 app.delete('/usuarios/:username/senhas/:senhaId', async (req, res) => {
   const { username, senhaId } = req.params;
 
   try {
-    // Busca o ID do usuário criador
     const userRef = collection(db, 'Usuario');
     const userQuery = query(userRef, where("username", "==", username));
     const userSnapshot = await getDocs(userQuery);
@@ -192,9 +183,8 @@ app.delete('/usuarios/:username/senhas/:senhaId', async (req, res) => {
       return res.status(404).json({ message: "Usuário não encontrado." });
     }
 
-    const userId = userSnapshot.docs[0].id; // ID do criador
+    const userId = userSnapshot.docs[0].id;
 
-    // Busca a senha para verificar se ela pertence ao usuário
     const senhaRef = collection(db, 'Senha');
     const senhaQuery = query(senhaRef, where("idUsuario", "==", userId), where("__name__", "==", senhaId));
     const senhaSnapshot = await getDocs(senhaQuery);
@@ -203,7 +193,6 @@ app.delete('/usuarios/:username/senhas/:senhaId', async (req, res) => {
       return res.status(404).json({ message: "Senha não encontrada ou não pertence a este usuário." });
     }
 
-    // Exclui o documento de senha
     await deleteDoc(doc(db, 'Senha', senhaId));
     res.status(200).json({ message: "Senha excluída com sucesso." });
   } catch (error) {
@@ -212,7 +201,7 @@ app.delete('/usuarios/:username/senhas/:senhaId', async (req, res) => {
   }
 });
 
-// Rota para buscar todos os usuários
+//obter todos os usuarios
 app.get('/usuarios', async (req, res) => {
   try {
     const usuarioRef = collection(db, 'Usuario');
@@ -229,13 +218,12 @@ app.get('/usuarios', async (req, res) => {
   }
 });
 
-// Rota para alterar uma senha cadastrada de um usuário
+//editar senha
 app.put('/usuarios/:username/senhas/:senhaId', async (req, res) => {
   const { username, senhaId } = req.params;
   const { titulo, descricao, senha, urlImagem, username: novoUsername } = req.body;
 
   try {
-    // Busca o ID do usuário criador
     const userRef = collection(db, 'Usuario');
     const userQuery = query(userRef, where("username", "==", username));
     const userSnapshot = await getDocs(userQuery);
@@ -244,9 +232,8 @@ app.put('/usuarios/:username/senhas/:senhaId', async (req, res) => {
       return res.status(404).json({ message: "Usuário não encontrado." });
     }
 
-    const userId = userSnapshot.docs[0].id; // ID do criador
+    const userId = userSnapshot.docs[0].id; 
 
-    // Busca a senha para verificar se ela pertence ao usuário
     const senhaRef = collection(db, 'Senha');
     const senhaQuery = query(senhaRef, where("idUsuario", "==", userId), where("__name__", "==", senhaId));
     const senhaSnapshot = await getDocs(senhaQuery);
@@ -255,13 +242,12 @@ app.put('/usuarios/:username/senhas/:senhaId', async (req, res) => {
       return res.status(404).json({ message: "Senha não encontrada ou não pertence a este usuário." });
     }
 
-    // Atualiza o documento da senha com os campos fornecidos
     const updateData = {};
     if (titulo) updateData.titulo = titulo;
     if (descricao) updateData.descricao = descricao;
-    if (senha) updateData.senha = encrypt(senha); // Criptografa a nova senha, se fornecida
+    if (senha) updateData.senha = encrypt(senha); 
     if (urlImagem) updateData.urlImagem = urlImagem;
-    if (novoUsername) updateData.username = novoUsername; // Atualiza o username se fornecido
+    if (novoUsername) updateData.username = novoUsername; 
 
     await updateDoc(doc(db, 'Senha', senhaId), updateData);
 

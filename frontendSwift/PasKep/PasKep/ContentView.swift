@@ -1,9 +1,9 @@
 import SwiftUI
 
-struct ContentView: View {
+struct ContentView: View { // 'home'
     
-    @State private var senhas: [Senha] = []  // Lista de senhas do usuário
-    var username: String  // Nome do usuário
+    @State private var senhas: [Senha] = []  // lista das senhas daquele usuario
+    var username: String  // username passado como parametro por outras telas
 
     @State private var goToLoginPage = false
 
@@ -15,7 +15,7 @@ struct ContentView: View {
                         Button(action: {
                             goToLoginPage = true
                         }) {
-                            Text("Sair")
+                            Text("Sair")   //sair, voltar para o login
                                 .padding()
                                 .background(Color.red)
                                 .foregroundColor(.white)
@@ -24,29 +24,30 @@ struct ContentView: View {
                         
                         Spacer()
                         
-                        Text("Olá, \(username)")  // Exibe o nome de usuário
+                        Text("Olá, \(username)")  // boas vindas para o usuario
                             .font(.headline)
                             .padding(.trailing)
                     }
                     .padding()
 
-                    // Exibe as senhas, se houver
+                    //  lista todas as senhas em formato de Card. Struct Card
                     List(senhas) { senha in
                         NavigationLink(destination: PassView(card: Card(id: senha.id, titulo: senha.titulo, descricao: senha.descricao, username: senha.username, senha: senha.senha, urlImagem: senha.urlImagem), username: username)) {
-
+                        //ao clicar em um card, levar para PassView
                             HStack {
                                 VStack(alignment: .leading) {
-                                    Text(senha.titulo)
+                                    Text(senha.titulo) // titulo da senha
                                         .font(.title2)
                                         .fontWeight(.bold)
                                     
-                                    Text(senha.descricao)
+                                    Text(senha.descricao)  //descricao da senha
                                         .font(.subheadline)
                                         .foregroundColor(.gray)
                                 }
                                 
                                 Spacer()
                                 
+                                //imagem da senha
                                 AsyncImage(url: URL(string: senha.urlImagem)) { image in
                                     image
                                         .resizable()
@@ -68,10 +69,10 @@ struct ContentView: View {
                     .listStyle(PlainListStyle())
                     .padding(.top, 10)
                     
-                    Spacer() // Para garantir que o botão flutuante fique no fundo
+                    Spacer() 
                 }
                 
-                // Botão flutuante no canto inferior direito
+                // botao flutuante fixo no canto direito inferior para criar nova senha
                 VStack {
                     Spacer()
                     HStack {
@@ -88,7 +89,7 @@ struct ContentView: View {
             }
             .navigationDestination(isPresented: $goToLoginPage) {
                 LoginView()
-                    .navigationBarBackButtonHidden(true) // Remove o botão de back da tela de login
+                    .navigationBarBackButtonHidden(true) 
             }
             .onAppear {
                 fetchSenhas()
@@ -96,12 +97,12 @@ struct ContentView: View {
         }
     }
     
-    // Função para fazer o fetch das senhas do usuário
+    // obter todas as senhas do usuario
     func fetchSenhas() {
         guard let url = URL(string: "http://localhost:3000/usuarios/\(username)/senhas") else { return }
         
         var request = URLRequest(url: url)
-        request.httpMethod = "GET"
+        request.httpMethod = "GET"   //requisição GET
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
@@ -115,7 +116,7 @@ struct ContentView: View {
                 let decoder = JSONDecoder()
                 let fetchedSenhas = try decoder.decode([Senha].self, from: data)
                 
-                // Atualiza a lista de senhas no principal thread
+                // ao obter as senhas, preencher o vetor de senhas 
                 DispatchQueue.main.async {
                     senhas = fetchedSenhas
                 }
@@ -126,7 +127,7 @@ struct ContentView: View {
     }
 }
 
-// Modelo para representar uma senha
+// struct para representar uma senha
 struct Senha: Identifiable, Decodable {
     var id: String
     var titulo: String

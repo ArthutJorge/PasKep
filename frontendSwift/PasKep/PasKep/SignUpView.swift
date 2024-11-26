@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct SignUpView: View {
+struct SignUpView: View {  //pagina de cadastro
     
     @State private var username = ""
     @State private var password = ""
@@ -12,37 +12,34 @@ struct SignUpView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                Text("Cadastro")
+                Text("Cadastro")  //titulo
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .padding(.top, 50)
                 
-                // Campo de username
-                TextField("Username", text: $username)
+                TextField("Username", text: $username)  //username
                     .padding()
                     .background(Color.gray.opacity(0.2))
                     .cornerRadius(8)
                     .padding(.horizontal)
                 
-                // Campo de senha
-                SecureField("Senha", text: $password)
-                    .padding()
-                    .background(Color.gray.opacity(0.2))
-                    .cornerRadius(8)
-                    .padding(.horizontal)
-                    .padding(.top, 20)
-                
-                // Campo de confirmação de senha
-                SecureField("Confirmar Senha", text: $confirmPassword)
+                SecureField("Senha", text: $password) //senha
                     .padding()
                     .background(Color.gray.opacity(0.2))
                     .cornerRadius(8)
                     .padding(.horizontal)
                     .padding(.top, 20)
                 
-                // Botão para criar conta
+                SecureField("Confirmar Senha", text: $confirmPassword)  //confirmar senha
+                    .padding()
+                    .background(Color.gray.opacity(0.2))
+                    .cornerRadius(8)
+                    .padding(.horizontal)
+                    .padding(.top, 20)
+                
+                // botao par criar nova conta
                 Button(action: {
-                    // Verificar se as senhas são iguais e se o username não está vazio
+                    // verifica se as senhas digitadas sao iguais
                     if password != confirmPassword {
                         alertMessage = "As senhas não coincidem."
                         showAlert = true
@@ -50,11 +47,10 @@ struct SignUpView: View {
                         alertMessage = "Preencha todos os campos."
                         showAlert = true
                     } else {
-                        // Chamar a função para criar o usuário
                         createUser()
                     }
                 }) {
-                    Text("Criar conta")
+                    Text("Criar conta")  //botao
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(Color.blue)
@@ -63,7 +59,7 @@ struct SignUpView: View {
                         .padding(.top, 20)
                 }
                 
-                // Link para login se já tiver uma conta
+                // se ja tiver uma conta, mandar para pagina de login
                 NavigationLink("Já tem uma conta?", destination: LoginView())
                     .padding(.top, 20)
                     .foregroundColor(.blue)
@@ -77,32 +73,30 @@ struct SignUpView: View {
             
             .navigationDestination(isPresented: $isLoggedIn) {
                 LoginView()
-                    .navigationBarBackButtonHidden(true) // Remove o botão de back da tela de login
+                    .navigationBarBackButtonHidden(true) 
             }
         }
     }
     
-    // Função para criar um novo usuário
+    // criar nova conta/user
     func createUser() {
-        // URL para a API de criação de usuário
+        // url 
         guard let url = URL(string: "http://localhost:3000/usuarios") else {
             alertMessage = "URL inválida."
             showAlert = true
             return
         }
         
-        // Dados para enviar no corpo da requisição
+        // corpo da requisição
         let userData = [
             "username": username,
             "senha": password
         ]
         
-        // Criação da requisição
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        // Codificando os dados para JSON
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: userData, options: .prettyPrinted)
             request.httpBody = jsonData
@@ -112,7 +106,7 @@ struct SignUpView: View {
             return
         }
         
-        // Enviando a requisição
+        // enviar requisicao
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
                 alertMessage = "Erro de rede: \(error.localizedDescription)"
@@ -120,14 +114,14 @@ struct SignUpView: View {
                 return
             }
             
-            // Verificando a resposta da API
+            // verificando a resposta
             if let data = data {
                 do {
-                    // Tentando decodificar a resposta
+                    // decodificando a resposta
                     if let responseJSON = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
                        let id = responseJSON["id"] as? String {
                         DispatchQueue.main.async {
-                            // Sucesso: usuário criado, vamos navegar para a tela principal
+                            // sucesso no cadastro
                             isLoggedIn = true
                         }
                     } else {

@@ -1,7 +1,7 @@
 import SwiftUI
 
-struct AddPassView: View {
-    @State private var titulo = ""
+struct AddPassView: View { // pagina para criar uma nova senha
+    @State private var titulo = ""  // variaveis dos inputs, atributos da senha
     @State private var descricao = ""
     @State private var urlImagem = ""
     @State private var senha = ""
@@ -11,33 +11,33 @@ struct AddPassView: View {
     @State private var isPasswordVisible = false
     @State private var isConfirmPasswordVisible = false
     
-    var username: String  // Recebe o nome de usuário
-    @Environment(\.dismiss) var dismiss  // Usado para voltar à tela anterior
+    var username: String  // recebe o nome de usuário
+    @Environment(\.dismiss) var dismiss  // usado para voltar para a tela anterior
 
-    var body: some View {
+    var body: some View {  //view principal
         NavigationStack {
             VStack {
-                TextField("Título", text: $titulo)
+                TextField("Título", text: $titulo) //titulo senha
                     .padding()
                     .background(Color.gray.opacity(0.2))
                     .cornerRadius(8)
                     .padding(.horizontal)
                 
-                TextField("Descrição", text: $descricao)
-                    .padding()
-                    .background(Color.gray.opacity(0.2))
-                    .cornerRadius(8)
-                    .padding(.horizontal)
-                    .padding(.top, 10)
-                
-                TextField("URL da Imagem", text: $urlImagem)
+                TextField("Descrição", text: $descricao)   //descricao da senha
                     .padding()
                     .background(Color.gray.opacity(0.2))
                     .cornerRadius(8)
                     .padding(.horizontal)
                     .padding(.top, 10)
                 
-                TextField("Username", text: $siteUsername)
+                TextField("URL da Imagem", text: $urlImagem)   //url da imagem da senha
+                    .padding()
+                    .background(Color.gray.opacity(0.2))
+                    .cornerRadius(8)
+                    .padding(.horizontal)
+                    .padding(.top, 10)
+                
+                TextField("Username", text: $siteUsername)   //username da senha
                     .padding()
                     .background(Color.gray.opacity(0.2))
                     .cornerRadius(8)
@@ -45,8 +45,8 @@ struct AddPassView: View {
                     .padding(.top, 10)
 
                 HStack {
-                    if isPasswordVisible {
-                        TextField("Senha", text: $senha)
+                    if isPasswordVisible { // espiar a senha
+                        TextField("Senha", text: $senha)   //senha em si
                             .padding()
                             .background(Color.gray.opacity(0.2))
                             .cornerRadius(8)
@@ -69,10 +69,10 @@ struct AddPassView: View {
                     }
                 }
                 
-                // Confirmar Senha
+                
                 HStack {
                     if isConfirmPasswordVisible {
-                        TextField("Confirmar Senha", text: $confirmarSenha)
+                        TextField("Confirmar Senha", text: $confirmarSenha)  // confirmar Senha
                             .padding()
                             .background(Color.gray.opacity(0.2))
                             .cornerRadius(8)
@@ -95,9 +95,8 @@ struct AddPassView: View {
                     }
                 }
                 
-                // Botão Criar Senha
                 Button(action: {
-                    validateAndCreatePassword()
+                    validateAndCreatePassword()   //ao clicar no botao de criar senha, chamar funcao
                 }) {
                     Text("Criar Senha")
                         .frame(maxWidth: .infinity)
@@ -123,27 +122,27 @@ struct AddPassView: View {
         }
     }
     
-    func validateAndCreatePassword() {
+    func validateAndCreatePassword() {   //se todos os dados foram preenchidos
         if titulo.isEmpty || descricao.isEmpty || senha.isEmpty || confirmarSenha.isEmpty || siteUsername.isEmpty {
             showAlert = true
         } else if senha != confirmarSenha {
             showAlert = true
         } else {
             if urlImagem.isEmpty {
-                urlImagem = "https://picsum.photos/500"
+                urlImagem = "https://picsum.photos/500"   //coloca uma imagem aleatoria se nao escolher uma
             }
             createPassword()
         }
     }
 
     func createPassword() {
-        let url = URL(string: "http://localhost:3000/usuarios/\(username)/senhas")!  // Modifique para a URL do seu backend
+        let url = URL(string: "http://localhost:3000/usuarios/\(username)/senhas")!  // url do backend
 
         var request = URLRequest(url: url)
-        request.httpMethod = "POST"
+        request.httpMethod = "POST"  //solicitacao post
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        let parameters: [String: Any] = [
+        let parameters: [String: Any] = [   //parametros da nova senha
             "titulo": titulo,
             "descricao": descricao,
             "senha": senha,
@@ -163,7 +162,7 @@ struct AddPassView: View {
                     return
                 }
 
-                // Caso a senha seja criada com sucesso, volta para a ContentView
+                // caso sucesso, voltar para a contentView
                 DispatchQueue.main.async {
                     self.dismiss()
                 }
